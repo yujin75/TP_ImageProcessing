@@ -7,6 +7,14 @@
 #include "ParkDetect.h"
 #include "ParkDetectDlg.h"
 
+//--추가--
+#include <opencv2/opencv.hpp>
+#include <iostream>
+#include <stdio.h>
+
+using namespace cv;
+using namespace std;
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -39,7 +47,7 @@ BOOL CParkDetectApp::InitInstance()
 {
 	CWinApp::InitInstance();
 
-
+	/*
 	// 대화 상자에 셸 트리 뷰 또는
 	// 셸 목록 뷰 컨트롤이 포함되어 있는 경우 셸 관리자를 만듭니다.
 	CShellManager *pShellManager = new CShellManager;
@@ -55,10 +63,11 @@ BOOL CParkDetectApp::InitInstance()
 	// TODO: 이 문자열을 회사 또는 조직의 이름과 같은
 	// 적절한 내용으로 수정해야 합니다.
 	SetRegistryKey(_T("로컬 애플리케이션 마법사에서 생성된 애플리케이션"));
-
+	*/
 	CParkDetectDlg dlg;
 	m_pMainWnd = &dlg;
 	INT_PTR nResponse = dlg.DoModal();
+	/*
 	if (nResponse == IDOK)
 	{
 		// TODO: 여기에 [확인]을 클릭하여 대화 상자가 없어질 때 처리할
@@ -87,6 +96,9 @@ BOOL CParkDetectApp::InitInstance()
 
 	// 대화 상자가 닫혔으므로 응용 프로그램의 메시지 펌프를 시작하지 않고  응용 프로그램을 끝낼 수 있도록 FALSE를
 	// 반환합니다.
+	*/
+
+
 	return FALSE;
 }
 
