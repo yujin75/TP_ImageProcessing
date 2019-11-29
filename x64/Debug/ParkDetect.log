@@ -1,4 +1,4 @@
-﻿  ParkDetect.cpp
-  ParkDetectDlg.cpp
-  코드를 생성하고 있습니다...
+﻿  ParkDetectDlg.cpp
+C:\WorkSpace\ImageProcessing\ParkDetect\ParkDetect\ParkDetectDlg.cpp(50,15): warning C4101: 'i' :참조되지 않은 지역 변수입니다.
+C:\WorkSpace\ImageProcessing\ParkDetect\ParkDetect\ParkDetectDlg.cpp(50,6): warning C4101: 'num' :참조되지 않은 지역 변수입니다.
   ParkDetect.vcxproj -> C:\WorkSpace\ImageProcessing\ParkDetect\x64\Debug\ParkDetect.exe

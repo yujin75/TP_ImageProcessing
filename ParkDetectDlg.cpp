@@ -47,7 +47,20 @@ BOOL CParkDetectDlg::OnInitDialog()
 
 	// TODO: 여기에 추가 초기화 작업을 추가합니다.
 
-	
+	int num[10], i;
+	GetDlgItem(IDC_PL_1)->GetWindowRect(m_image_rect);
+	ScreenToClient(m_image_rect);
+	m_image.Load(L"C:\\WorkSpace\\ImageProcessing\\ParkDetect\\ParkDetect\\parkinglot_image\\NoCar_bmp.bmp");
+	InvalidateRect(m_image_rect, FALSE);
+	/*
+	for (i = 0; i < 10; i++) {
+		GetDlgItem(IDC_PL_1 + i)->GetWindowRect(m_image_rect);
+		ScreenToClient(m_image_rect);
+		m_image.Load(L"C:\WorkSpace\ImageProcessing\ParkDetect\ParkDetect\parkinglot_image\NoCar_bmp.bmp");
+		InvalidateRect(m_image_rect, FALSE);
+	}
+	*/
+
 
 	return TRUE;  // 포커스를 컨트롤에 설정하지 않으면 TRUE를 반환합니다.
 }
@@ -58,10 +71,10 @@ BOOL CParkDetectDlg::OnInitDialog()
 
 void CParkDetectDlg::OnPaint()
 {
+	CPaintDC dc(this); // 그리기를 위한 디바이스 컨텍스트입니다.
+
 	if (IsIconic())
 	{
-		CPaintDC dc(this); // 그리기를 위한 디바이스 컨텍스트입니다.
-
 		SendMessage(WM_ICONERASEBKGND, reinterpret_cast<WPARAM>(dc.GetSafeHdc()), 0);
 
 		// 클라이언트 사각형에서 아이콘을 가운데에 맞춥니다.
@@ -77,7 +90,9 @@ void CParkDetectDlg::OnPaint()
 	}
 	else
 	{
-		CDialogEx::OnPaint();
+		//CDialogEx::OnPaint();
+		dc.SetStretchBltMode(COLORONCOLOR);
+		m_image.Draw(dc, m_image_rect);
 	}
 }
 
