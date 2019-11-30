@@ -8,10 +8,19 @@
 #include "ParkDetectDlg.h"
 #include "afxdialogex.h"
 
+//--추가--
+
+#include <opencv2/opencv.hpp>
+#include <iostream>
+#include <stdio.h>
+
+
+using namespace cv;
+using namespace std;
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
-
 
 // CParkDetectDlg 대화 상자
 
@@ -31,6 +40,7 @@ void CParkDetectDlg::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CParkDetectDlg, CDialogEx)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
+	ON_BN_CLICKED(IDOK, &CParkDetectDlg::OnBnClickedOk)
 END_MESSAGE_MAP()
 
 
@@ -46,21 +56,21 @@ BOOL CParkDetectDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 작은 아이콘을 설정합니다.
 
 	// TODO: 여기에 추가 초기화 작업을 추가합니다.
-
-	int num[10], i;
+	
+	/*
 	GetDlgItem(IDC_PL_1)->GetWindowRect(m_image_rect);
 	ScreenToClient(m_image_rect);
 	m_image.Load(L"C:\\WorkSpace\\ImageProcessing\\ParkDetect\\ParkDetect\\parkinglot_image\\NoCar_bmp.bmp");
 	InvalidateRect(m_image_rect, FALSE);
-	/*
-	for (i = 0; i < 10; i++) {
-		GetDlgItem(IDC_PL_1 + i)->GetWindowRect(m_image_rect);
-		ScreenToClient(m_image_rect);
-		m_image.Load(L"C:\WorkSpace\ImageProcessing\ParkDetect\ParkDetect\parkinglot_image\NoCar_bmp.bmp");
-		InvalidateRect(m_image_rect, FALSE);
-	}
 	*/
-
+	
+	int num[10], i;
+	for (i = 0; i < 10; i++) {
+		GetDlgItem(IDC_PL_1 + i)->GetWindowRect(m_image_rect[i]);
+		ScreenToClient(m_image_rect[i]);
+		m_image[i].Load(L"C:\\WorkSpace\\ImageProcessing\\ParkDetect\\ParkDetect\\parkinglot_image\\NoCar_black_bmp.bmp");
+		InvalidateRect(m_image_rect[i], FALSE);
+	}
 
 	return TRUE;  // 포커스를 컨트롤에 설정하지 않으면 TRUE를 반환합니다.
 }
@@ -72,7 +82,7 @@ BOOL CParkDetectDlg::OnInitDialog()
 void CParkDetectDlg::OnPaint()
 {
 	CPaintDC dc(this); // 그리기를 위한 디바이스 컨텍스트입니다.
-
+	
 	if (IsIconic())
 	{
 		SendMessage(WM_ICONERASEBKGND, reinterpret_cast<WPARAM>(dc.GetSafeHdc()), 0);
@@ -90,9 +100,10 @@ void CParkDetectDlg::OnPaint()
 	}
 	else
 	{
-		//CDialogEx::OnPaint();
+		CDialogEx::OnPaint();
 		dc.SetStretchBltMode(COLORONCOLOR);
-		m_image.Draw(dc, m_image_rect);
+		for(int i=0;i<10;i++)
+			m_image[i].Draw(dc, m_image_rect[i]);
 	}
 }
 
@@ -103,3 +114,11 @@ HCURSOR CParkDetectDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
+
+void CParkDetectDlg::OnBnClickedOk()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	//CDialogEx::OnOK();
+	
+
+}

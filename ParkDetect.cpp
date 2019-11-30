@@ -7,13 +7,6 @@
 #include "ParkDetect.h"
 #include "ParkDetectDlg.h"
 
-//--추가--
-#include <opencv2/opencv.hpp>
-#include <iostream>
-#include <stdio.h>
-
-using namespace cv;
-using namespace std;
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
