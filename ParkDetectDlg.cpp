@@ -66,7 +66,7 @@ BOOL CParkDetectDlg::OnInitDialog()
 	//주차 가능 리스트 초기화
 	CString str;
 	for (int i = 1; i <= 10; i++) {
-		str.Format(L"%02d번", i);
+		str.Format(L"%d", i);
 		m_possible_list.InsertString(i - 1, str);
 	}
 
@@ -176,16 +176,24 @@ void CParkDetectDlg::OnBnClickedBtnEvent()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	CPaintDC dc(this);
-	change *= -1;
-	int i = 9;
+	int i = 6;//ex)주차칸 7번(6+1)에 이벤트 발생했다고 가정
+	CString str;
+	str.Format(_T("%d"), i+1);
+	int index;
 	m_image[i].Destroy();
-	if (change == -1) {
+	if (change == 1) {//주차 가능(차 없음)->주차 불가(차 있음)
+		index = m_possible_list.FindString(-1, str);
+		m_possible_list.DeleteString(index);
+		m_impossible_list.InsertString(-1, str);
 		m_image[i].Load(L"C:\\WorkSpace\\ImageProcessing\\ParkDetect\\ParkDetect\\parkinglot_image\\Car_black_bmp.bmp");
 	}
-	else {
+	else {//주차 불가(차 있음)->주차 가능(차 없음)
+		index = m_impossible_list.FindString(-1, str);
+		m_impossible_list.DeleteString(index);
+		m_possible_list.InsertString(-1, str);
 		m_image[i].Load(L"C:\\WorkSpace\\ImageProcessing\\ParkDetect\\ParkDetect\\parkinglot_image\\NoCar_black_bmp.bmp");
 	}
 	InvalidateRect(m_image_rect[i], FALSE);
 	m_image[i].Draw(dc, m_image_rect[i]);
-
+	change *= -1;
 }
