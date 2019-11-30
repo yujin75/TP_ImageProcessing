@@ -11,8 +11,6 @@ class CParkDetectDlg : public CDialogEx
 // 생성입니다.
 public:
 	CParkDetectDlg(CWnd* pParent = nullptr);	// 표준 생성자입니다.
-	CImage m_image;
-	CRect m_image_rect[10];
 
 // 대화 상자 데이터입니다.
 #ifdef AFX_DESIGN_TIME
@@ -39,4 +37,10 @@ private:
 public:
 	afx_msg void OnBnClickedOk();
 	afx_msg void OnBnClickedBtnStart();
+	CListBox m_possible_list;
+	CListBox m_impossible_list;
+	int change;
+	CImage m_image[10];
+	CRect m_image_rect[10];
+	afx_msg void OnBnClickedCancel();
 };

@@ -4,8 +4,8 @@
 //
 #define IDD_PARKDETECT_DIALOG           102
 #define IDR_MAINFRAME                   128
-#define IDC_LIST1                       1000
-#define IDC_LIST2                       1001
+#define IDC_LIST_Possible               1000
+#define IDC_LIST_Impossible             1001
 #define IDC_PL_1                        1002
 #define IDC_PL_2                        1003
 #define IDC_PL_3                        1004
@@ -16,7 +16,6 @@
 #define IDC_PL_8                        1009
 #define IDC_PL_9                        1010
 #define IDC_PL_10                       1011
-#define IDC_BUTTON1                     1012
 #define IDC_BTN_Start                   1012
 
 // Next default values for new objects
