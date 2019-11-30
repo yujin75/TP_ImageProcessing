@@ -43,4 +43,6 @@ public:
 	CImage m_image[10];
 	CRect m_image_rect[10];
 	afx_msg void OnBnClickedCancel();
+//	afx_msg void OnBnClickedButton2();
+	afx_msg void OnBnClickedBtnEvent();
 };

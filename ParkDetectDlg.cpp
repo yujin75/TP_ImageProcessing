@@ -46,6 +46,7 @@ BEGIN_MESSAGE_MAP(CParkDetectDlg, CDialogEx)
 	ON_BN_CLICKED(IDOK, &CParkDetectDlg::OnBnClickedOk)
 	ON_BN_CLICKED(IDC_BTN_Start, &CParkDetectDlg::OnBnClickedBtnStart)
 	ON_BN_CLICKED(IDCANCEL, &CParkDetectDlg::OnBnClickedCancel)
+	ON_BN_CLICKED(IDC_BTN_EVENT, &CParkDetectDlg::OnBnClickedBtnEvent)
 END_MESSAGE_MAP()
 
 
@@ -61,14 +62,6 @@ BOOL CParkDetectDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 작은 아이콘을 설정합니다.
 
 	// TODO: 여기에 추가 초기화 작업을 추가합니다.
-	
-	/*
-	GetDlgItem(IDC_PL_1)->GetWindowRect(m_image_rect);
-	ScreenToClient(m_image_rect);
-	m_image.Load(L"C:\\WorkSpace\\ImageProcessing\\ParkDetect\\ParkDetect\\parkinglot_image\\NoCar_bmp.bmp");
-	InvalidateRect(m_image_rect, FALSE);
-	*/
-
 	
 	//주차 가능 리스트 초기화
 	CString str;
@@ -114,7 +107,6 @@ void CParkDetectDlg::OnPaint()
 	}
 	else
 	{
-
 		dc.SetStretchBltMode(COLORONCOLOR);
 		for (int i = 0; i < 10; i++) {
 			m_image[i].Draw(dc, m_image_rect[i]);
@@ -130,14 +122,59 @@ HCURSOR CParkDetectDlg::OnQueryDragIcon()
 	return static_cast<HCURSOR>(m_hIcon);
 }
 
+void CParkDetectDlg::OnBnClickedBtnStart()
+{	
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	VideoCapture cap1(0);
+	if (!cap1.isOpened())
+		cout << "첫번째 카메라를 열 수 없습니다." << endl;
+
+	Mat frame1;
+	namedWindow("Parking Lot", WINDOW_AUTOSIZE);
+
+	while (1) {
+		//웹캡으로부터 한 프레임을 읽어옴
+		cap1 >> frame1;
+		imshow("Parking Lot", frame1);
+		// ESC키를 누르면 웹캠 종료
+		if (waitKey(10) == 27) {
+			cv::destroyWindow("Parking Lot");
+			break;
+		} 
+	}
+
+	
+
+}
+
+
+
+
+
 void CParkDetectDlg::OnBnClickedOk()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	CDialogEx::OnOK();
 }
 
-void CParkDetectDlg::OnBnClickedBtnStart()
-{	
+void CParkDetectDlg::OnBnClickedCancel()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	CDialogEx::OnCancel();
+	
+}
+
+
+//void CParkDetectDlg::OnBnClickedButton2()
+//{
+//	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다
+//
+//}
+
+
+void CParkDetectDlg::OnBnClickedBtnEvent()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	CPaintDC dc(this);
 	change *= -1;
 	int i = 9;
@@ -151,34 +188,4 @@ void CParkDetectDlg::OnBnClickedBtnStart()
 	InvalidateRect(m_image_rect[i], FALSE);
 	m_image[i].Draw(dc, m_image_rect[i]);
 
-	
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	VideoCapture cap1(0);
-	if (!cap1.isOpened())
-		cout << "첫번째 카메라를 열 수 없습니다." << endl;
-
-	Mat frame1;
-	namedWindow("Parking Lot", WINDOW_AUTOSIZE);
-
-	while (1) {
-		//웹캡으로부터 한 프레임을 읽어옴
-		cap1 >> frame1;
-		imshow("Parking Lot", frame1);
-		// ESC키를 누르면 종료
-		if (waitKey(10) == 27) {
-			cv::destroyWindow("Parking Lot");
-			break;
-		} 
-	}
-
-	
-
-}
-
-void CParkDetectDlg::OnBnClickedCancel()
-{
-	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	cv::destroyWindow("Parking Lot");
-	CDialogEx::OnCancel();
-	
 }
