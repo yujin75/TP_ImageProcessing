@@ -35,12 +35,14 @@ CParkDetectDlg::CParkDetectDlg(CWnd* pParent /*=nullptr*/)
 void CParkDetectDlg::DoDataExchange(CDataExchange* pDX)
 {
 	CDialogEx::DoDataExchange(pDX);
+	
 }
 
 BEGIN_MESSAGE_MAP(CParkDetectDlg, CDialogEx)
 	ON_WM_PAINT()
 	ON_WM_QUERYDRAGICON()
 	ON_BN_CLICKED(IDOK, &CParkDetectDlg::OnBnClickedOk)
+	ON_BN_CLICKED(IDC_BTN_Start, &CParkDetectDlg::OnBnClickedBtnStart)
 END_MESSAGE_MAP()
 
 
@@ -64,12 +66,16 @@ BOOL CParkDetectDlg::OnInitDialog()
 	InvalidateRect(m_image_rect, FALSE);
 	*/
 	
-	int num[10], i;
+	//주차 가능 이미지로 초기화
+	int i;
+	
+	m_image.Load(L"C:\\WorkSpace\\ImageProcessing\\ParkDetect\\ParkDetect\\parkinglot_image\\NoCar_black_bmp.bmp");
 	for (i = 0; i < 10; i++) {
 		GetDlgItem(IDC_PL_1 + i)->GetWindowRect(m_image_rect[i]);
+
 		ScreenToClient(m_image_rect[i]);
-		m_image[i].Load(L"C:\\WorkSpace\\ImageProcessing\\ParkDetect\\ParkDetect\\parkinglot_image\\NoCar_black_bmp.bmp");
 		InvalidateRect(m_image_rect[i], FALSE);
+
 	}
 
 	return TRUE;  // 포커스를 컨트롤에 설정하지 않으면 TRUE를 반환합니다.
@@ -103,7 +109,7 @@ void CParkDetectDlg::OnPaint()
 		CDialogEx::OnPaint();
 		dc.SetStretchBltMode(COLORONCOLOR);
 		for(int i=0;i<10;i++)
-			m_image[i].Draw(dc, m_image_rect[i]);
+			m_image.Draw(dc, m_image_rect[i]);
 	}
 }
 
@@ -118,7 +124,24 @@ HCURSOR CParkDetectDlg::OnQueryDragIcon()
 void CParkDetectDlg::OnBnClickedOk()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	//CDialogEx::OnOK();
-	
+	CDialogEx::OnOK();
+}
 
+void CParkDetectDlg::OnBnClickedBtnStart()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+	VideoCapture cap1(0);
+	if (!cap1.isOpened())
+		cout << "첫번째 카메라를 열 수 없습니다." << endl;
+
+	Mat frame1;
+	namedWindow("camera1", WINDOW_AUTOSIZE);
+
+	while (1) {
+		//웹캡으로부터 한 프레임을 읽어옴
+		cap1 >> frame1;
+		imshow("camera1", frame1);
+		// q키를 누르면 종료
+		if (waitKey(1) == 27) break;
+	}
 }

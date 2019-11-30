@@ -1,3 +1,2 @@
 ﻿  ParkDetectDlg.cpp
-C:\WorkSpace\ImageProcessing\ParkDetect\ParkDetect\ParkDetectDlg.cpp(67,6): warning C4101: 'num' :참조되지 않은 지역 변수입니다.
   ParkDetect.vcxproj -> C:\WorkSpace\ImageProcessing\ParkDetect\x64\Debug\ParkDetect.exe
